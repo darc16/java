@@ -1,0 +1,14 @@
+jt.queryForRowSet()
+
+queryForList() - list is individual values from query, if no results empty list
+queryForMap() - map of fields and values from a single row
+queryForObject() - single field value and one row. Multiple rows will blow up.
+
+BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
+
+        String sql ="Select id, description, display_name from reports";
+        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+
+        List<ShortReport> shortReports = jt.query(sql, rowMapper);
+
+        return shortReports;
