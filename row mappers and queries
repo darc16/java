@@ -3,6 +3,7 @@ jt.queryForRowSet()
 queryForList() - list is individual values from query, if no results empty list
 queryForMap() - map of fields and values from a single row
 queryForObject() - single field value and one row. Multiple rows will blow up.
+query() - row mapper
 
 BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
 
