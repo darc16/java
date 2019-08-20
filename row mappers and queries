@@ -1,9 +1,17 @@
-jt.queryForRowSet()
-
+queryForRowSet() - set of values for the full row(s) from the database. returns SQLRowSet Object. rs.next() to get each record rs.get("fieldname") to get values.
 queryForList() - list is individual values from query, if no results empty list
 queryForMap() - map of fields and values from a single row
-queryForObject() - single field value and one row. Multiple rows will blow up.
+queryForObject(sql, object class) - single field value and one row. Multiple rows will blow up.
+        get count or get database time. For counts on joins this could blow up use queryforrowset instead and check rs.next()
+         String sql = "Select count(*) from indicators";
+        JdbcTemplate jt = new JdbcTemplate(this.dataSource);
+        SqlRowSet rs = jt.queryForRowSet(sql);
+        int count = 0;
+        if(rs.next()){
+            count = rs.getInt("count");
+        }
 query() - row mapper
+update() - returns the number of affected rows
 
 BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
 
