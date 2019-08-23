@@ -21,3 +21,12 @@ BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(ShortReport.class);
         List<ShortReport> shortReports = jt.query(sql, rowMapper);
 
         return shortReports;
+
+get counts using a string for the date
+
+select to_char(created_date, 'YYYY-mm'), count(to_char(created_date, 'YYYY-mm')) from reports group by to_char(created_date, 'YYYY-mm')
+
+select indicator_types.name, count(indicator_types.name)
+from indicators
+join indicator_types on indicators.ind_type = indicator_types.id
+group by indicator_types.name;
