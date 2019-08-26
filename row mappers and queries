@@ -30,3 +30,22 @@ select indicator_types.name, count(indicator_types.name)
 from indicators
 join indicator_types on indicators.ind_type = indicator_types.id
 group by indicator_types.name;
+
+
+Joins
+
+left - matches and everything on the left. (left is the first table referenced in the select)
+right - matches and everything on the right
+innner - default will only get things that match on both sides
+outer full - will get everything
+
+COALESCE(users.full_name,'Unknown') - returns the first non-null value, if null it returns the second variable.
+
+
+select sales.sell_date, sales.value, 
+case 
+when users.full_name is null then 'Unknown' else users.full_name end
+from sales
+left join users on sales.salesperson_id = users.id;
+
+COALESCE(sales.sell_date::varchar,'N/A') -- allow string values in a number or other type of field :: lets you cast to a different type.
