@@ -49,3 +49,5 @@ from sales
 left join users on sales.salesperson_id = users.id;
 
 COALESCE(sales.sell_date::varchar,'N/A') -- allow string values in a number or other type of field :: lets you cast to a different type.
+
+in sql % is wild card character.
