@@ -51,3 +51,43 @@ left join users on sales.salesperson_id = users.id;
 COALESCE(sales.sell_date::varchar,'N/A') -- allow string values in a number or other type of field :: lets you cast to a different type.
 
 in sql % is wild card character.
+
+
+get the oldest record from a join 
+
+select r.display_name, r.id, min(ra.timestamp), max(ra.timestamp), count(ra.timestamp) as created_date
+from reports r
+join reports_aud ra on r.id = ra.id
+group by r.display_name, r.id
+
+
+post gres faster way to get the same thing
+
+select r.display_name, r.id, oldest.timestamp as created_date, newest.timestamp as last_mod_date
+from reports r
+
+join (select distinct on(id) id, timestamp
+      from reports_aud
+      order by id, timestamp asc) oldest on oldest.id = r.id
+
+join (select distinct on(id) id, timestamp
+      from reports_aud
+      order by id, timestamp desc) newest on newest.id = r.id;
+      
+      
+  custom sub views
+ 
+ with oldest as (
+    -- oldest report audit records
+    select distinct on(id) id, timestamp
+                from reports_aud
+                order by id, timestamp asc),
+newest as (select distinct on(id) id, timestamp
+
+    from reports_aud
+    order by id, timestamp desc)
+    select r.display_name, r.id, oldest.timestamp as created_date, newest.timestamp as last_mod_date
+from reports r
+join oldest on oldest.id = r.id
+join newest on newest.id = r.id
+order by r.id
