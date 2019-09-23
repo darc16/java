@@ -1,0 +1,38 @@
+Creating views
+
+
+select count(*) from reports_aud
+
+Create view indicators_view as
+select i.id as ind_id, i.value as ind_value, ia.timestamp as last_update_date, ia2.timestamp as created_date from indicators i
+join (select distinct
+        on (id)id, timestamp
+    from indicators_aud order by id, timestamp desc) ia
+on ia.id = i.id
+join (select distinct
+    on (id)id, timestamp
+      from indicators_aud order by id, timestamp asc) ia2
+     on ia2.id = i.id;
+
+select * from indicators_view;
+
+
+Create view indicators_view_cte as
+    with oldest as (
+        select distinct
+            on (id)id, timestamp
+        from indicators_aud order by id, timestamp desc
+    ),
+    newest as (
+     select distinct
+            on (id)id, timestamp
+        from indicators_aud order by id, timestamp asc
+    )
+select i.id as ind_id, i.value as ind_value, oldest.timestamp as last_update_date, newest.timestamp as created_date from indicators i
+join oldest on oldest.id = i.id
+join newest on newest.id = i.id;
+
+select * from indicators_view_cte;
+
+
+select count(*) from indicators_view
