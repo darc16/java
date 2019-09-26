@@ -1,0 +1,17 @@
+text - case insensitive, wildcards
+keyword - case sensetive, can sort but not in a human friendly way
+
+add a normalizer to fix it
+"analysis": {
+          "normalizer": {
+            "case_insensitive_normalizer": {
+              "type": "custom",
+              "char_filter": [],
+              "filter": [ "lowercase", "asciifolding" ]
+            }
+          }
+        },
+        
+ integrer
+ ip , date -- allow range queries, {thing TO thing} excludes the edges [thing TO thing] includes the edges.
+
